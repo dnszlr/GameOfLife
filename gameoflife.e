@@ -9,6 +9,7 @@ create
 	make
 
 --Konstruktor? Mit den Attributen damit die Erstellung über Parameter diesen anspricht?
+
 feature {NONE} -- Initialization
 
 	make
@@ -25,9 +26,10 @@ feature {NONE} -- Initialization
 feature --Attributes
 	grid : ARRAY2[EUKARYOTICCELLS]
 
+--Feature to Update every cell in the grid for the next evolution.
 
 feature
-	update --Method to Update every cell in the grid for the next evolution.
+	update
 		local
 			i : INTEGER
 			j : INTEGER
@@ -55,6 +57,7 @@ feature
 --INTEGER : i is used in the loop to count up.
 --INTEGER : j is used in the loop to count up.
 --No result.
+
 feature
 
 	draw

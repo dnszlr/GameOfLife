@@ -31,73 +31,75 @@ feature
 --INTEGER low is the lowest possible index of the grid.
 --INTEGER highX is the highest possible index of the x axe.
 --INTEGER highY is the highest possible index of the y axe.
---Result is a List of the type Eukaryoticcells.
+--Result is a ARRAYED_LIST of the type Eukaryoticcells.
 
 feature
-	neighbours : LIST[EUKARYOTICCELLS]
+	neighbours : ARRAYED_LIST[EUKARYOTICCELLS]
 
 		local
 			low : INTEGER
 			highX : INTEGER
 			highY : INTEGER
-
+			temp : ARRAYED_LIST[EUKARYOTICCELLS]
 		do
+			create temp.make (0)
 			low := 1
 			highX := argument_array.item (2).to_integer
 			highY := argument_array.item (3).to_integer
 			if
 				Current.x /= low
 			then
-				Result.append (gol.grid.item (current.x - 1, current.y))
+				temp.extend (gol.grid.item (current.x - 1, current.y))
 				--west direction
 			end
 			if
 				Current.x /= highX
 			then
-				Result.append (gol.grid.item (current.x + 1, current.y))
+				temp.extend (gol.grid.item (current.x + 1, current.y))
 				--east direction
 			end
 			if
 				Current.x /= low and Current.y /= low
 			then
-				Result.append (gol.grid.item (current.x - 1, current.y - 1))
+				temp.extend (gol.grid.item (current.x - 1, current.y - 1))
 				--north-west direction
 			end
 			if
 				Current.x /= highX and Current.y /= low
 			then
-				Result.append (gol.grid.item (current.x - 1, current.y + 1))
+				temp.extend (gol.grid.item (current.x - 1, current.y + 1))
 				--north east direction
 			end
 			if
 				Current.x /= low and Current.y /= highY
 			then
-				Result.append (gol.grid.item (current.x + 1, current.y - 1))
+				temp.extend (gol.grid.item (current.x + 1, current.y - 1))
 				--south-west direction
 			end
 			if
 				Current.x /= highX and Current.y /= low
 			then
-				Result.append (gol.grid.item (current.x + 1, current.y + 1))
+				temp.extend (gol.grid.item (current.x + 1, current.y + 1))
 				--south-east direction
 			end
 			if
 				Current.y /= low
 			then
-				Result.append(gol.grid.item (current.x, current.y - 1))
+				temp.extend (gol.grid.item (current.x, current.y -1))
 				--north direction
 			end
 			if
 				Current.y /= highY
 			then
-				Result.append(gol.grid.item (current.x, current.y + 1))
+				temp.extend (gol.grid.item (current.x, current.y + 1))
 				--south direction
 			end
+			Result := temp
 		end
 
 --Method to update the cell for the next evolution.
 --Attributes of the feature:
---List[EUKARYOTICCELLS] is a list of all neighbours.
+--ARRAYED_LIST[EUKARYOTICCELLS] is a list of all neighbours.
 --INTEGER aliveN are the amount of living neighbours of the cell.
 --INTEGER deadN are the amount of dead neighbours of the cell.
 --INTEGER i is used in the loop to count up.
@@ -107,7 +109,7 @@ feature
 	next
 
 		local
-			neighboursCell : LIST[EUKARYOTICCELLS]
+			neighboursCell : ARRAYED_LIST[EUKARYOTICCELLS]
 			aliveN : INTEGER
 			deadN : INTEGER
 			i : INTEGER
