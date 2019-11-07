@@ -9,18 +9,17 @@ create
 	make
 
 --Konstruktor? Mit den Attributen damit die Erstellung über Parameter diesen anspricht?
---Gittestcommend HIER HAT SICH WAS VERÄNDERT GIT --> HIER <-- VERÄNDERUNG!
 feature {NONE} -- Initialization
 
 	make
 		local
-			cell : EUKARYOTICCELLS
+			celltest : EUKARYOTICCELLS
 
 		-- Run application.
 		do
 			--| Add your code here
-			create cellTest.make
-			create grid.make_filled (cell, argument_array.item (2).to_integer, argument_array.item (3).to_integer)
+			create cellTest.make(1,2,false)
+			create grid.make_filled (cellTest, argument_array.item (2).to_integer, argument_array.item (3).to_integer)
 		end
 
 feature --Attributes

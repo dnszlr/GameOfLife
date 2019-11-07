@@ -1,7 +1,3 @@
-note
-	description: "ws19__g6_gameoflife application root class"
-	date: "$Date$"
-	revision: "$Revision$"
 
 class
 	APPLICATION

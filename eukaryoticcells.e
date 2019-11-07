@@ -11,7 +11,7 @@ create
 --Konstruktor? Mit x,y passend zur Position im Grid von GameOfLife? Wo wird die Wahrscheinlichkeit von alive berechnet?
 
 feature {NONE} -- Initialization
-	make
+	make(x1 : INTEGER; y1 : INTEGER; alive1 : BOOLEAN)
 			-- Run application.
 		do
 			create gol.make
