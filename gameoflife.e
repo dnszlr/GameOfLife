@@ -26,7 +26,10 @@ feature {NONE} -- Initialization
 feature --Attributes
 	grid : ARRAY2[EUKARYOTICCELLS]
 
---Feature to Update every cell in the grid for the next evolution.
+--Feature to update every cell in the grid for the next evolution.
+--INTEGER : i is used in the loop to count up.
+--INTEGER : j is used in the loop to count up.
+--No result.
 
 feature
 	update
