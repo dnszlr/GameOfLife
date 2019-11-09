@@ -1,4 +1,3 @@
-
 class
 	EUKARYOTICCELLS
 
@@ -15,7 +14,6 @@ feature {NONE} -- Initialization
 			-- Run application.
 		do
 			create gol.make
-			--gol unnötig? Andere Verknüpfung zu GameOfLife möglich?
 		end
 
 --Class Attributes
@@ -25,6 +23,18 @@ feature
 			y : INTEGER
 			alive : BOOLEAN
 			gol : GAMEOFLIFE
+
+--Feature to set the coordinates from a existing cell
+--No Result
+--Richtig so? Hier fehlt noch die Wahrscheinlichkeits Berechnung in Verbindung mit der alive Variablen. Vielleicht besser im Konstruktor.
+feature
+	setUpCell(x1 : INTEGER; y1 : INTEGER)
+		do
+			x := x1
+			y := y1
+
+		end
+
 
 --Feature to get amount of neighbours from the current cell.
 --Attributes of the feature:
@@ -49,49 +59,49 @@ feature
 			if
 				Current.x /= low
 			then
-				temp.extend (gol.grid.item (current.x - 1, current.y))
+				temp.extend (gol.grid.item (Current.x - 1, Current.y))
 				--west direction
 			end
 			if
 				Current.x /= highX
 			then
-				temp.extend (gol.grid.item (current.x + 1, current.y))
+				temp.extend (gol.grid.item (Current.x + 1, Current.y))
 				--east direction
 			end
 			if
 				Current.x /= low and Current.y /= low
 			then
-				temp.extend (gol.grid.item (current.x - 1, current.y - 1))
+				temp.extend (gol.grid.item (Current.x - 1, Current.y - 1))
 				--north-west direction
 			end
 			if
 				Current.x /= highX and Current.y /= low
 			then
-				temp.extend (gol.grid.item (current.x - 1, current.y + 1))
+				temp.extend (gol.grid.item (Current.x - 1, Current.y + 1))
 				--north east direction
 			end
 			if
 				Current.x /= low and Current.y /= highY
 			then
-				temp.extend (gol.grid.item (current.x + 1, current.y - 1))
+				temp.extend (gol.grid.item (Current.x + 1, Current.y - 1))
 				--south-west direction
 			end
 			if
 				Current.x /= highX and Current.y /= low
 			then
-				temp.extend (gol.grid.item (current.x + 1, current.y + 1))
+				temp.extend (gol.grid.item (Current.x + 1, Current.y + 1))
 				--south-east direction
 			end
 			if
 				Current.y /= low
 			then
-				temp.extend (gol.grid.item (current.x, current.y -1))
+				temp.extend (gol.grid.item (Current.x, Current.y -1))
 				--north direction
 			end
 			if
 				Current.y /= highY
 			then
-				temp.extend (gol.grid.item (current.x, current.y + 1))
+				temp.extend (gol.grid.item (Current.x, Current.y + 1))
 				--south direction
 			end
 			Result := temp

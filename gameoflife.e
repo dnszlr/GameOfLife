@@ -1,4 +1,3 @@
-
 class
 	GAMEOFLIFE
 
@@ -13,20 +12,35 @@ create
 feature {NONE} -- Initialization
 
 	make
-		local
-			celltest : EUKARYOTICCELLS
-
 		-- Run application.
+		local
+			i : INTEGER
+			j : INTEGER
 		do
-			--| Add your code here
-			create cellTest.make(1,2,false)
-			create grid.make_filled (cellTest, argument_array.item (2).to_integer, argument_array.item (3).to_integer)
+			create cell.make(1, 1, false)
+			create grid.make_filled (cell, argument_array.item (2).to_integer, argument_array.item (3).to_integer)
+			from
+				i := grid.lower
+			until
+				i > argument_array.item (2).to_integer
+			loop
+				from
+					j := grid.lower
+				until
+					j > argument_array.item (3).to_integer
+				loop
+					grid.item (i, j).setUpCell (i, j)
+				end
+			end
 		end
 
-feature --Attributes
+--Class Attributes
+feature
 	grid : ARRAY2[EUKARYOTICCELLS]
+	cell : EUKARYOTICCELLS
 
---Feature to update every cell in the grid for the next evolution.
+
+--Feature to update every cell's alive variable in the grid for the next evolution.
 --INTEGER : i is used in the loop to count up.
 --INTEGER : j is used in the loop to count up.
 --No result.
@@ -56,6 +70,7 @@ feature
 		end
 
 --Feature to draw the grid on the console.
+--# is alive == true, - is alive == false
 --Attributes of the feature:
 --INTEGER : i is used in the loop to count up.
 --INTEGER : j is used in the loop to count up.
@@ -86,7 +101,6 @@ feature
 						io.put_string ("-")
 					end
 					j := j + 1
-					--Konsolenausgabe fehlt
 				end
 				io.new_line
 				i := i + 1
