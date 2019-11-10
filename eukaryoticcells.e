@@ -7,50 +7,53 @@ inherit
 create
 	make
 
---Konstruktor? Mit x,y passend zur Position im Grid von GameOfLife? Wo wird die Wahrscheinlichkeit von alive berechnet?
-
-feature {NONE} -- Initialization
-	make(x1 : INTEGER; y1 : INTEGER; alive1 : BOOLEAN)
-			-- Run application.
-		do
-			create gol.make
-		end
-
 --Class Attributes
 
 feature
 			x : INTEGER
 			y : INTEGER
 			alive : BOOLEAN
-			gol : GAMEOFLIFE
+			gridBool : ARRAY2[BOOLEAN]
 
---Feature to set the coordinates from a existing cell
---No Result
---Richtig so? Hier fehlt noch die Wahrscheinlichkeits Berechnung in Verbindung mit der alive Variablen. Vielleicht besser im Konstruktor.
-feature
-	setUpCell(x1 : INTEGER; y1 : INTEGER)
+feature {NONE} -- Initialization
+	make(x1 : INTEGER; y1 : INTEGER; alive1 : BOOLEAN)
+			-- Run application.
 		do
 			x := x1
 			y := y1
-
+			alive := alive1
+			create gridBool.make_filled (false, argument_array.item (2).to_integer, argument_array.item (3).to_integer) --Create gridBool with default values.
 		end
 
+--Feature to set the coordinates from a existing cell
+--No Result
+
+feature
+	setUpCell(x1 : INTEGER; y1 : INTEGER; alive1 : BOOLEAN)
+--Lokale Random Varibale machen und mit der Übergebenen probability vergleichen, wenn der Random Wert kleiner als die probability ist, ist die Zelle alive.
+--Boolean alive zu probability double ändern und boolean berechnen mit ^
+--Update Feature schreiben um gridBool nach jeder Runde auf den neusten Stand zu bringen.
+		do
+			x := x1
+			y := y1
+			gridBool.item (x1, x1) := alive1
+		end
 
 --Feature to get amount of neighbours from the current cell.
 --Attributes of the feature:
---INTEGER low is the lowest possible index of the grid.
---INTEGER highX is the highest possible index of the x axe.
---INTEGER highY is the highest possible index of the y axe.
---Result is a ARRAYED_LIST of the type Eukaryoticcells.
+--low : INTEGER is the lowest possible index of the grid.
+--highX : INTEGER is the highest possible index of the x axe.
+--highY : INTEGER is the highest possible index of the y axe.
+--Result is a ARRAYED_LIST of the type Eukaryoticcells which contains the cells neighbours.
 
 feature
-	neighbours : ARRAYED_LIST[EUKARYOTICCELLS]
+	neighbours : ARRAYED_LIST[BOOLEAN]
 
 		local
 			low : INTEGER
 			highX : INTEGER
 			highY : INTEGER
-			temp : ARRAYED_LIST[EUKARYOTICCELLS]
+			temp : ARRAYED_LIST[BOOLEAN]
 		do
 			create temp.make (0)
 			low := 1
@@ -59,49 +62,49 @@ feature
 			if
 				Current.x /= low
 			then
-				temp.extend (gol.grid.item (Current.x - 1, Current.y))
+				temp.extend (gridBool.item (Current.x - 1, Current.y))
 				--west direction
 			end
 			if
 				Current.x /= highX
 			then
-				temp.extend (gol.grid.item (Current.x + 1, Current.y))
+				temp.extend (gridBool.item (Current.x + 1, Current.y))
 				--east direction
 			end
 			if
 				Current.x /= low and Current.y /= low
 			then
-				temp.extend (gol.grid.item (Current.x - 1, Current.y - 1))
+				temp.extend (gridBool.item (Current.x - 1, Current.y - 1))
 				--north-west direction
 			end
 			if
 				Current.x /= highX and Current.y /= low
 			then
-				temp.extend (gol.grid.item (Current.x - 1, Current.y + 1))
+				temp.extend (gridBool.item (Current.x - 1, Current.y + 1))
 				--north east direction
 			end
 			if
 				Current.x /= low and Current.y /= highY
 			then
-				temp.extend (gol.grid.item (Current.x + 1, Current.y - 1))
+				temp.extend (gridBool.item (Current.x + 1, Current.y - 1))
 				--south-west direction
 			end
 			if
 				Current.x /= highX and Current.y /= low
 			then
-				temp.extend (gol.grid.item (Current.x + 1, Current.y + 1))
+				temp.extend (gridBool.item (Current.x + 1, Current.y + 1))
 				--south-east direction
 			end
 			if
 				Current.y /= low
 			then
-				temp.extend (gol.grid.item (Current.x, Current.y -1))
+				temp.extend (gridBool.item (Current.x, Current.y -1))
 				--north direction
 			end
 			if
 				Current.y /= highY
 			then
-				temp.extend (gol.grid.item (Current.x, Current.y + 1))
+				temp.extend (gridBool.item (Current.x, Current.y + 1))
 				--south direction
 			end
 			Result := temp
@@ -110,16 +113,16 @@ feature
 --Method to update the cell for the next evolution.
 --Attributes of the feature:
 --ARRAYED_LIST[EUKARYOTICCELLS] is a list of all neighbours.
---INTEGER aliveN are the amount of living neighbours of the cell.
---INTEGER deadN are the amount of dead neighbours of the cell.
---INTEGER i is used in the loop to count up.
+--aliveN : INTEGER are the amount of living neighbours of the cell.
+--deadN : INTEGER are the amount of dead neighbours of the cell.
+--i : INTEGER is used in the loop to count up.
 --No result.
 
 feature
 	next
 
 		local
-			neighboursCell : ARRAYED_LIST[EUKARYOTICCELLS]
+			neighboursCell : ARRAYED_LIST[BOOLEAN]
 			aliveN : INTEGER
 			deadN : INTEGER
 			i : INTEGER
@@ -133,7 +136,7 @@ feature
 				i > neighboursCell.count
 			loop
 				if
-					neighboursCell[i].alive
+					neighboursCell.at (i)
 				then
 					aliveN := aliveN + 1
 				else
