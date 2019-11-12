@@ -17,12 +17,33 @@ feature
 			neighboursArrayed : ARRAYED_LIST[EUKARYOTICCELLS]
 
 feature {NONE} -- Initialization
-	make(x1 : INTEGER; y1 : INTEGER; alive1 : BOOLEAN)
+	make(x1 : INTEGER; y1 : INTEGER; probability : DOUBLE)
 			-- Run application.
+		local
+			random : RANDOM
+			size : INTEGER
 		do
 			x := x1
 			y := y1
-			alive := alive1
+			size := (x * y)
+        	across
+        		1 |..| size  as i
+    		from
+        		create random.set_seed (1)
+        		random.start
+    		loop
+        		random.forth
+
+    		end
+    		io.put_double (random.double_item)
+    		io.new_line
+			if
+				random.double_item <= probability
+			then
+				alive := true
+			else
+				alive := false
+			end
 			aliveTemp := alive
 			create neighboursArrayed.make (0)
 		end
@@ -170,6 +191,7 @@ feature
 			aliveTemp := bool
 		end
 
+--Feature to update alive with the value of the aliveTemp
 feature
 	updateAlive
 		do
