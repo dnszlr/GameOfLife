@@ -37360,7 +37360,7 @@ const struct cnode egc_fsystem_init[] = {
 {
 	(long) 0,
 	(long) 0,
-	"APPLICATION",
+	"GAMEOFLIFE",
 	NULL,
 	NULL,
 	NULL,

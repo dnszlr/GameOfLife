@@ -125,7 +125,7 @@ void egc_init_plug (void)
 	egc_rcdt = (int32 *) eif_malloc (sizeof(int32)*egc_rcount);
 	egc_rcrid = (int32 *) eif_malloc (sizeof(int32)*egc_rcount);
 	egc_rcarg = (int32 *) eif_malloc (sizeof(int32)*egc_rcount);
-	egc_rlist[0] = "APPLICATION.make";
+	egc_rlist[0] = "GAMEOFLIFE.make";
 	egc_rcdt[0] = 0;
 	egc_rcrid[0] = 4999;
 	egc_rcarg[0] = 0;
@@ -140,7 +140,7 @@ void egc_init_plug (void)
 void egc_rcdt_init (void)
 {
 	if (egc_rcdt[0] == 0) {
-		egc_rcdt[0] = 959; /* APPLICATION */
+		egc_rcdt[0] = 959; /* GAMEOFLIFE */
 	}
 }
 

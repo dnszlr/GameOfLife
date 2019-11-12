@@ -3840,7 +3840,7 @@ static struct eif_par_types par957 = {957, ptf957, (uint16) 1, (uint16) 1, (char
 static EIF_TYPE_INDEX ptf958[] = {140,0xFFFF};
 static struct eif_par_types par958 = {958, ptf958, (uint16) 1, (uint16) 1, (char) 0};
 
-/* APPLICATION */
+/* GAMEOFLIFE */
 static EIF_TYPE_INDEX ptf959[] = {147,0xFFFF};
 static struct eif_par_types par959 = {959, ptf959, (uint16) 1, (uint16) 0, (char) 0};
 

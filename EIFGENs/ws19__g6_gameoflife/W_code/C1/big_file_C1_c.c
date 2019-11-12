@@ -1,2 +1,2 @@
-#include "ap960.c"
-#include "ap960d.c"
+#include "ga960.c"
+#include "ga960d.c"

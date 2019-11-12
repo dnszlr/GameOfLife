@@ -14,7 +14,6 @@ feature
 	cell : EUKARYOTICCELLS
 
 feature {NONE} -- Initialization
-
 	make
 		-- Run application.
 		local
@@ -22,21 +21,41 @@ feature {NONE} -- Initialization
 			j : INTEGER
 		do
 			create cell.make(1, 1, false) --Dummy cell to create grid
-			create grid.make_filled (cell, argument_array.item (2).to_integer, argument_array.item (3).to_integer)
+			create grid.make_filled (cell, argument_array.item (1).to_integer, argument_array.item (2).to_integer)
 
 			from
-				i := grid.lower
+				i := 1
 			until
-				i > argument_array.item (2).to_integer
+				i > argument_array.item (1).to_integer
 			loop
 				from
-					j := grid.lower
+					j := 1
 				until
-					j > argument_array.item (3).to_integer
+					j > argument_array.item (2).to_integer
 				loop
-					grid.item (i, j).setUpCell (i, j, grid.item (i, j).alive) --Setting up cell values
+					create cell.make (i, j, true)
+					grid.item (i, j) := cell
+					j := j + 1
 				end
+				i := i + 1
 			end
+
+			across grid as l
+			loop
+				l.item.neighbours (grid) --loops across the whole grid to set up the neighbours for the first evolution.
+			end
+
+			draw
+			io.new_line
+			update
+			draw
+			io.new_line
+			update
+			draw
+			io.new_line
+			update
+			draw
+--Grid Kopie erstellen, damit die Zellen sich in der Iteration nicht aktuallisieren, bevor die einzelne Evolution.
 		end
 
 --Feature to update every cell's alive variable in the grid for the next evolution.
@@ -54,17 +73,23 @@ feature
 			from
 				i := grid.lower
 			until
-				i > argument_array.item (2).to_integer
+				i > argument_array.item (1).to_integer
 			loop
 				from
 					j := grid.lower
 				until
-					j > argument_array.item (3).to_integer
+					j > argument_array.item (2).to_integer
 				loop
 					grid.item (i, j).next
+					grid.item (i, j).neighbours (grid)
 					j := j + 1
 				end
 				i := i + 1
+			end
+
+			across grid as l
+			loop
+				l.item.updateAlive --loops across the whole grid to set up the neighbours for the first evolution.
 			end
 		end
 
@@ -85,12 +110,12 @@ feature
 			from
 				i := grid.lower
 			until
-				i > argument_array.item (2).to_integer
+				i > argument_array.item (1).to_integer
 			loop
 				from
 					j := grid.lower
 				until
-					j > argument_array.item (3).to_integer
+					j > argument_array.item (2).to_integer
 				loop
 					if
 						grid.item (i, j).alive
