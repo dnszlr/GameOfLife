@@ -1,3 +1,8 @@
+note
+	description: "Summary description for {EUKARYOTICCELLS}."
+	author: "Phillipp Lohmann, Kris Viehl, Patrick Keppeler, Mohammed Kalash, Dennis Zeller"
+	date: "07.11.19"
+
 class
 	EUKARYOTICCELLS
 
@@ -33,10 +38,7 @@ feature {NONE} -- Initialization
         		random.start
     		loop
         		random.forth
-
     		end
-    		io.put_double (random.double_item)
-    		io.new_line
 			if
 				random.double_item <= probability
 			then
@@ -180,9 +182,7 @@ feature
 					setAliveTemp(true)
 				end
 			end
-			neighboursArrayed.wipe_out --Clear the neighbours list for next evolution.
 		end
-		--neighboursArrayed evtl clearen für nächste Evolution?
 
 --Feature to set alive because set_item(boolean) does't work properlly.
 feature
