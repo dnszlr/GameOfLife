@@ -1,8 +1,7 @@
 note
 	description: "Summary description for {APPLICATION}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	author: "Phillipp Lohmann, Kris Viehl, Patrick Keppeler, Mohammed Kalash, Dennis Zeller"
+	date: "07.11.19"
 
 class
 	APPLICATION
@@ -30,7 +29,6 @@ feature{NONE}
 				gol.draw
 				gol.update
 				sleep(1000000000)
-				io.
 			end
 		end
 
