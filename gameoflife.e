@@ -26,17 +26,17 @@ feature {NONE} -- Initialization
 			j : INTEGER
 		do
 			create cell.make(1, 1, argument_array.item(3).to_double) --Dummy cell to create grid.
-			create grid.make_filled (cell, argument_array.item (1).to_integer, argument_array.item (2).to_integer)
+			create grid.make_filled (cell, argument_array.item (2).to_integer, argument_array.item (1).to_integer)
 
 			from
 				i := 1
 			until
-				i > argument_array.item (1).to_integer
+				i > argument_array.item (2).to_integer
 			loop
 				from
 					j := 1
 				until
-					j > argument_array.item (2).to_integer
+					j > argument_array.item (1).to_integer
 				loop
 					create cell.make (i, j, argument_array.item(3).to_double) --Create the actual cell with the correct values.
 					grid.item (i, j) := cell
@@ -65,12 +65,12 @@ feature
 			from
 				i := 1
 			until
-				i > argument_array.item (1).to_integer
+				i > argument_array.item (2).to_integer
 			loop
 				from
 					j := 1
 				until
-					j > argument_array.item (2).to_integer
+					j > argument_array.item (1).to_integer
 				loop
 					grid.item (i, j).next
 					j := j + 1
@@ -101,12 +101,12 @@ feature
 			from
 				i := 1
 			until
-				i > argument_array.item (1).to_integer
+				i > argument_array.item (2).to_integer
 			loop
 				from
 					j := 1
 				until
-					j > argument_array.item (2).to_integer
+					j > argument_array.item (1).to_integer
 				loop
 					if
 						grid.item (i, j).alive

@@ -111,8 +111,8 @@ feature
 			highY : INTEGER
 		do
 			low := 1
-			highX := argument_array.item (1).to_integer
-			highY := argument_array.item (2).to_integer
+			highX := argument_array.item (2).to_integer
+			highY := argument_array.item (1).to_integer
 			if
 				Current.x /= low
 			then

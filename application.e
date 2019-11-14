@@ -14,8 +14,8 @@ create
 
 feature
 	gol : GAMEOFLIFE
-	--argument_array(1) is the high of the grid (INTEGER)
-	--argument_array(2) is the width of the grid (INTEGER)
+	--argument_array(1) is the width of the grid (INTEGER)
+	--argument_array(2) is the hight of the grid (INTEGER)
 	--argument_array(3) is the probability for the alive status of a cell, has to be between 0..1 (DOUBLE)
 
 feature{NONE}
