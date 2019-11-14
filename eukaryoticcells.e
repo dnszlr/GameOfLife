@@ -36,7 +36,6 @@ feature {NONE} -- Initialization
 		do
 			x := x1
 			y := y1
-			aliveTemp := alive
 			random := randomValue(x, y)
 			if
 				random <= probability -- The generated random value is a double between 0..1 and compared to the given probability.
@@ -46,6 +45,7 @@ feature {NONE} -- Initialization
 			else
 				alive := false
 			end
+			aliveTemp := alive
 			create neighboursArrayed.make (0)
 		end
 
@@ -79,7 +79,7 @@ feature
 			Result := random.double_item
 		end
 
---Feature to set alive because set_item(boolean) doesn't work properlly.
+--Feature to set alive.
 
 feature
 	setAliveTemp(bool : BOOLEAN)
@@ -87,7 +87,7 @@ feature
 			aliveTemp := bool
 		end
 
---Feature to update alive with the value of the aliveTemp
+--Feature to update alive with the value of the aliveTemp.
 
 feature
 	updateAlive
@@ -111,8 +111,8 @@ feature
 			highY : INTEGER
 		do
 			low := 1
-			highX := argument_array.item (2).to_integer
-			highY := argument_array.item (1).to_integer
+			highX := argument_array.item (1).to_integer
+			highY := argument_array.item (2).to_integer
 			if
 				Current.x /= low
 			then

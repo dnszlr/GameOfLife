@@ -14,8 +14,8 @@ create
 
 feature
 	gol : GAMEOFLIFE
-	--argument_array(1) is the width of the grid (INTEGER)
-	--argument_array(2) is the hight of the grid (INTEGER)
+	--argument_array(1) is the height of the grid (INTEGER)
+	--argument_array(2) is the width of the grid (INTEGER)
 	--argument_array(3) is the probability for the alive status of a cell, has to be between 0..1 (DOUBLE)
 
 feature{NONE}
@@ -27,7 +27,7 @@ feature{NONE}
 			from --Fake loop for endless simulation.
 				i := 1
 			until
-				i > 1
+				i > 4
 			loop
 				gol.draw
 				gol.update
