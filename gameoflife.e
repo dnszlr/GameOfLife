@@ -80,7 +80,7 @@ feature
 
 			across grid as l
 			loop
-				l.item.updateAlive --Here is the value of alive updated to the same state of alivTemp. This is needed because we can't override alive immediately,
+				l.item.updateAlive --Here is the value of alive updated to the same state of aliveTemp. This is needed because we can't override alive immediately,
 								   --this would resolve in a wrong result.
 			end
 		end

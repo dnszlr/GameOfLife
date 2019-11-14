@@ -31,8 +31,8 @@ feature{NONE}
 			loop
 				gol.draw
 				gol.update
-				sleep(1000000000) -- Sleep timer to slow down the simulation for better observation.
-				i := 1 + 1
+				io.new_line
+				sleep(3000000000) -- Sleep timer to slow down the simulation for better observation.
 			end
 		end
 
