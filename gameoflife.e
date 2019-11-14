@@ -9,7 +9,6 @@ class
 inherit
 	ARGUMENTS_32
 
-
 create
 	make
 
@@ -26,7 +25,7 @@ feature {NONE} -- Initialization
 			i : INTEGER
 			j : INTEGER
 		do
-			create cell.make(1, 1, argument_array.item(3).to_double) --Dummy cell to create grid
+			create cell.make(1, 1, argument_array.item(3).to_double) --Dummy cell to create grid.
 			create grid.make_filled (cell, argument_array.item (1).to_integer, argument_array.item (2).to_integer)
 
 			from
@@ -39,7 +38,7 @@ feature {NONE} -- Initialization
 				until
 					j > argument_array.item (2).to_integer
 				loop
-					create cell.make (i, j, argument_array.item(3).to_double)
+					create cell.make (i, j, argument_array.item(3).to_double) --Create the actual cell with the correct values.
 					grid.item (i, j) := cell
 					j := j + 1
 				end
@@ -50,10 +49,6 @@ feature {NONE} -- Initialization
 			loop
 				l.item.neighbours (grid) --loops across the whole grid to set up the neighbours for the first evolution.
 			end
-
-
-
-
 		end
 
 --Feature to update every cell's alive variable in the grid for the next evolution.
@@ -66,15 +61,14 @@ feature
 		local
 			i : INTEGER
 			j : INTEGER
-
 		do
 			from
-				i := grid.lower
+				i := 1
 			until
 				i > argument_array.item (1).to_integer
 			loop
 				from
-					j := grid.lower
+					j := 1
 				until
 					j > argument_array.item (2).to_integer
 				loop
@@ -86,7 +80,8 @@ feature
 
 			across grid as l
 			loop
-				l.item.updateAlive --loops across the whole grid to set up the neighbours for the first evolution.
+				l.item.updateAlive --Here is the value of alive updated to the same state of alivTemp. This is needed because we can't override alive immediately,
+								   --this would resolve in a wrong result.
 			end
 		end
 
@@ -98,19 +93,18 @@ feature
 --No result.
 
 feature
-
 	draw
 		local
 			i : INTEGER
 			j : INTEGER
 		do
 			from
-				i := grid.lower
+				i := 1
 			until
 				i > argument_array.item (1).to_integer
 			loop
 				from
-					j := grid.lower
+					j := 1
 				until
 					j > argument_array.item (2).to_integer
 				loop
@@ -127,5 +121,4 @@ feature
 				i := i + 1
 			end
 		end
-
 end

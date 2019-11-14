@@ -12,7 +12,12 @@ inherit
 create
 	make
 
---Class Attributes
+-- Class Attributes:
+-- x : INTEGER is the x coordinate.
+-- y : INTEGER is the y coordinate.
+-- alive : BOOLEAN is the current living state of the cell.
+-- aliveTemp : BOOLEAN saves the living state of the cell for the next generation.
+-- neighboursArrayed : ARRAYED_LIST[EUKARYOTICCELLS] includes the neighbours of the cell.
 
 feature
 			x : INTEGER
@@ -21,46 +26,73 @@ feature
 			aliveTemp : BOOLEAN
 			neighboursArrayed : ARRAYED_LIST[EUKARYOTICCELLS]
 
+-- Constructor
+
 feature {NONE} -- Initialization
 	make(x1 : INTEGER; y1 : INTEGER; probability : DOUBLE)
 			-- Run application.
 		local
-			random : RANDOM
-			size : INTEGER
+			random : DOUBLE
 		do
 			x := x1
 			y := y1
-			size := (x * y)
-        	across
-        		1 |..| size  as i
-    		from
-        		create random.set_seed (1)
-        		random.start
-    		loop
-        		random.forth
-    		end
+			aliveTemp := alive
+			random := randomValue(x, y)
 			if
-				random.double_item <= probability
+				random <= probability -- The generated random value is a double between 0..1 and compared to the given probability.
+									  -- If random is <= the cell is alive.
 			then
 				alive := true
 			else
 				alive := false
 			end
-			aliveTemp := alive
 			create neighboursArrayed.make (0)
 		end
 
---Feature to set the coordinates from a existing cell
---No Result
+-- Feature to generate a random value.
+-- i : INTEGER is used in the loop to count up.
+-- random : RANDOM is the create random value.
+-- size : INTEGER is used to get the unique value of the cell.
+-- ((x * argument_array.item (1).to_integer) + y) - 4 because x = 1 | y = 2 and x = 2 | y = 1 would be the same if we just multiply.
+-- -4 because Eiffel Arrays start at 1. This helps to reduce the amount of needed loops.
+-- Loops from 1 to the index of the cell and get a new "random" number for each iteration.
+-- Because the index of every cell is unique it can be used for the amount of iterations.
 
 feature
-	setUpCell(x1 : INTEGER; y1 : INTEGER; alive1 : BOOLEAN)
---Lokale Random Varibale machen und mit der Übergebenen probability vergleichen, wenn der Random Wert kleiner als die probability ist, ist die Zelle alive.
---Boolean alive zu probability double ändern und boolean berechnen mit ^
+	randomValue(x1 : INTEGER; y1 : INTEGER) : DOUBLE
+		local
+			i : INTEGER
+			random : RANDOM
+			size : INTEGER
 		do
-			x := x1
-			y := y1
-			alive := alive1
+			create random.make
+			random.start
+			size := (((x1 * argument_array.item (1).to_integer) + y1) - 4)
+			from
+				i := 1
+			until
+				i > size
+			loop
+				random.forth
+				i := i + 1
+			end
+			Result := random.double_item
+		end
+
+--Feature to set alive because set_item(boolean) doesn't work properlly.
+
+feature
+	setAliveTemp(bool : BOOLEAN)
+		do
+			aliveTemp := bool
+		end
+
+--Feature to update alive with the value of the aliveTemp
+
+feature
+	updateAlive
+		do
+			alive := aliveTemp
 		end
 
 --Feature to get amount of neighbours from the current cell.
@@ -68,7 +100,7 @@ feature
 --low : INTEGER is the lowest possible index of the grid.
 --highX : INTEGER is the highest possible index of the x axe.
 --highY : INTEGER is the highest possible index of the y axe.
---No result
+--No result.
 
 feature
 	neighbours(grid : ARRAY2[EUKARYOTICCELLS])
@@ -129,7 +161,6 @@ feature
 				neighboursArrayed.extend (grid.item (Current.x, Current.y + 1))
 				--south direction
 			end
-
 		end
 
 --Method to update the cell for the next evolution.
@@ -140,7 +171,6 @@ feature
 
 feature
 	next
-
 		local
 			aliveN : INTEGER
 			i : INTEGER
@@ -182,20 +212,6 @@ feature
 					setAliveTemp(true)
 				end
 			end
-		end
-
---Feature to set alive because set_item(boolean) does't work properlly.
-feature
-	setAliveTemp(bool : BOOLEAN)
-		do
-			aliveTemp := bool
-		end
-
---Feature to update alive with the value of the aliveTemp
-feature
-	updateAlive
-		do
-			alive := aliveTemp
 		end
 end
 
